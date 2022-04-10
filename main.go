@@ -304,6 +304,52 @@ func (kit *TikTokKit) GetVideoList(cursor int64, maxCount int32, fields []string
 	return string(body), nil
 }
 
+type VideoQueryFormData struct {
+	AccessToken string
+	OpenId string
+	Filters Filters
+	Fields []string
+}
+
+type Filters struct {
+	VideoIds []string
+}
+
+// GetVideoQuery
+// https://developers.tiktok.com/doc/login-kit-video-query
+func (kit *TikTokKit) GetVideoQuery(videoIds []string, fields []string) (response string, err error) {
+	videoListFormData := &VideoQueryFormData{
+		AccessToken: kit.Settings.AccessToken,
+		OpenId: kit.Settings.OpenId,
+		Filters: Filters{
+			VideoIds: videoIds,
+		},
+		Fields: fields,
+	}
+
+	postBody, err := json.Marshal(videoListFormData)
+
+	if err != nil {
+		return "", err
+	}
+
+	resp, err := http.Post(videoListEndpoint, "application/json", bytes.NewBuffer(postBody))
+
+	if err != nil {
+		return "", err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(body), nil
+}
+
 // ShareSound
 // https://developers.tiktok.com/doc/sound-kit-share-sound
 func (kit *TikTokKit) ShareSound(filePath string) (response string, err error) {
