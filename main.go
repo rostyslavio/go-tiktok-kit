@@ -318,7 +318,7 @@ type Filters struct {
 // GetVideoQuery
 // https://developers.tiktok.com/doc/login-kit-video-query
 func (kit *TikTokKit) GetVideoQuery(videoIds []string, fields []string) (response string, err error) {
-	videoListFormData := &VideoQueryFormData{
+	videoListFormData := VideoQueryFormData{
 		AccessToken: kit.Settings.AccessToken,
 		OpenId: kit.Settings.OpenId,
 		Filters: Filters{
