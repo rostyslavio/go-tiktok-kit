@@ -21,6 +21,7 @@ const (
 	revokeAccessEndpoint = "https://open-api.tiktok.com/oauth/revoke/?open_id=%s&access_token=%s"
 	userInfoEndpoint = "https://open-api.tiktok.com/user/info/"
 	videoListEndpoint = "https://open-api.tiktok.com/video/list/"
+	videoQueryEndpoint = "https://open-api.tiktok.com/video/query/"
 	shareSoundEndpoint = "https://open-api.tiktok.com/share/sound/upload/?open_id=%s&access_token=%s"
 	shareVideoEndpoint = "https://open-api.tiktok.com/share/video/upload/?open_id=%s&access_token=%s"
 
@@ -333,7 +334,7 @@ func (kit *TikTokKit) GetVideoQuery(videoIds []string, fields []string) (respons
 		return "", err
 	}
 
-	resp, err := http.Post(videoListEndpoint, "application/json", bytes.NewBuffer(postBody))
+	resp, err := http.Post(videoQueryEndpoint, "application/json", bytes.NewBuffer(postBody))
 
 	if err != nil {
 		return "", err
