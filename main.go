@@ -24,6 +24,7 @@ const (
 	videoQueryEndpoint = "https://open-api.tiktok.com/video/query/"
 	shareSoundEndpoint = "https://open-api.tiktok.com/share/sound/upload/?open_id=%s&access_token=%s"
 	shareVideoEndpoint = "https://open-api.tiktok.com/share/video/upload/?open_id=%s&access_token=%s"
+	embedEndpoint = "https://www.tiktok.com/oembed?url=%s"
 
 	// TikTokReadProfileScope Read your profile info (avatar, display name).
 	TikTokReadProfileScope = "user.info.basic"
@@ -433,6 +434,28 @@ func (kit *TikTokKit) ShareVideo(filePath string) (response string, err error) {
 	client := &http.Client{}
 
 	resp, err := client.Do(r)
+
+	if err != nil {
+		return "", err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(body), nil
+}
+
+// GetEmbed
+// https://developers.tiktok.com/doc/embed-videos
+func (kit *TikTokKit) GetEmbed(url string) (response string, err error) {
+	endpoint := fmt.Sprintf(embedEndpoint, url)
+
+	resp, err := http.Get(endpoint)
 
 	if err != nil {
 		return "", err
