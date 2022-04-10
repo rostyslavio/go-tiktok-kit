@@ -225,9 +225,9 @@ func (kit *TikTokKit) RevokeAccess() (response string, err error) {
 }
 
 type UserInfoFormData struct {
-	AccessToken string
-	OpenId string
-	Fields []string
+	AccessToken string `json:"access_token"`
+	OpenId string `json:"open_id"`
+	Fields []string `json:"fields"`
 }
 
 // GetUserInfo
@@ -263,11 +263,11 @@ func (kit *TikTokKit) GetUserInfo(fields []string) (response string, err error) 
 }
 
 type VideoListFormData struct {
-	AccessToken string
-	OpenId string
-	Cursor int64
-	MaxCount int32
-	Fields []string
+	AccessToken string `json:"access_token"`
+	OpenId string `json:"open_id"`
+	Cursor int64 `json:"cursor"`
+	MaxCount int32 `json:"max_count"`
+	Fields []string  `json:"fields"`
 }
 
 // GetVideoList
@@ -305,14 +305,14 @@ func (kit *TikTokKit) GetVideoList(cursor int64, maxCount int32, fields []string
 }
 
 type VideoQueryFormData struct {
-	AccessToken string
-	OpenId string
-	Filters Filters
-	Fields []string
+	AccessToken string `json:"access_token"`
+	OpenId string `json:"open_id"`
+	Filters Filters `json:"filters"`
+	Fields []string `json:"fields"`
 }
 
 type Filters struct {
-	VideoIds []string
+	VideoIds []string `json:"video_ids"`
 }
 
 // GetVideoQuery
